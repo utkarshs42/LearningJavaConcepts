@@ -2,10 +2,12 @@ package LamdaAndStreams;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Streams {
     public static void main(String[] args) {
-        example7();
+        example9();
     }
     //print all the element of list using stream
     public static void example1(){
@@ -77,6 +79,35 @@ public class Streams {
                 });
         System.out.println(a);
     }
-    //
+     //Sort the list
+     //Stream does not change original List
+     //sorted method sort the stream but return stream back
+    ///collect method collec back data and make list of it again
+    public static void example8(){
+        List<Integer> list = List.of(4,1,2,6,8,9,3);
+        List<Integer> sortedlist =
+                list    .stream()
+                        .sorted()  //sorted returns stream(not terminal method)
+                        .collect(Collectors.toList());
+        System.out.println(sortedlist);
+    }
+    //LAZY EVALUATION --> if we dont use sorted in betweena nd just do for each then stream doesn't
+    //                    go through whole list just check first list and then end stream since only first
+    //                    element is required, but if used sorted then travel whole list.
 
+    //findfirst is terminal method and it finds first element
+    public static void example9(){
+        List<Integer> list = List.of(4,1,2,6,8,9,3);
+        Optional<Integer> abc =
+                list    .stream()
+                        .map((ele)->{
+                            System.out.println(ele);
+                            return ele*ele;
+                        })
+                        .sorted()
+                        .findFirst();
+         System.out.println(abc.get());
+    }
+  //TBR --> there is also something called  "ParallerStream" in which we can do operations on
+  //        data concurrently.
 }
